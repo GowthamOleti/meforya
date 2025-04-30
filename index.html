@@ -5,104 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mehnaaz Husain | Resume</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    :root {
-      --transition: background 1s ease, color 1s ease, font-family 1s ease;
-    }
     body {
-      transition: var(--transition);
+      transition: background 1s ease, color 1s ease;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      font-family: 'Helvetica Neue', sans-serif;
     }
-
     .theme-day {
       color: #1f2937;
       background-color: #ffffff;
-      font-family: 'Helvetica Neue', sans-serif;
     }
-
     .theme-night {
       color: #f3f4f6;
       background-color: #1f2937;
-      font-family: 'Courier New', monospace;
     }
-
-    .theme-sunrise {
-      color: #1f2937;
-      font-family: 'Georgia', serif;
+    .download-icon, .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      width: 36px;
+      height: 36px;
+      background: white;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
     }
-
-    .theme-sunset {
-      color: #1f2937;
-      font-family: 'Trebuchet MS', sans-serif;
+    .download-icon {
+      left: 1rem;
     }
-
-    a {
-      transition: color 0.3s;
+    .theme-toggle {
+      left: 4.5rem;
     }
-
-    .theme-night a {
-      color: #93c5fd;
+    .datetime-info {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.875rem;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      z-index: 1000;
     }
-
-    .theme-day a,
-    .theme-sunrise a,
-    .theme-sunset a {
-      color: #2563eb;
-    }
-
-    .theme-night .max-w-3xl {
-      background-color: rgba(31, 41, 55, 0.95);
-      color: #f9fafb;
-    }
-
-    .theme-night .text-sm,
-    .theme-night .text-xl,
-    .theme-night .text-lg,
-    .theme-night p,
-    .theme-night li,
-    .theme-night h1,
-    .theme-night h2 {
-      color: #f9fafb !important;
-    }
-
     .profile-pic {
       width: 160px;
       aspect-ratio: 1 / 1;
-      overflow: visible;
-      margin-bottom: 1.5rem;
       perspective: 1000px;
       transition: transform 0.3s ease;
     }
-
-    .profile-pic img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
     }
-
-    .greeting {
-      font-size: 0.875rem;
-      text-align: center;
-      margin-bottom: 1rem;
-      opacity: 0.85;
+    .theme-night #resume {
+      background-color: #2a2a2a !important;
     }
   </style>
 </head>
-<body class="font-sans p-10">
-  <div class="max-w-3xl mx-auto bg-white bg-opacity-90 backdrop-blur-md p-8 rounded-xl shadow-xl">
+<body class="theme-day font-sans p-10">
+  <canvas id="confetti-canvas"></canvas>
+  <div class="download-icon" onclick="downloadPDF()">
+    <i data-lucide="download"></i>
+  </div>
+  <div class="theme-toggle" onclick="toggleTheme()">
+    <i data-lucide="sun-moon"></i>
+  </div>
+  <div class="datetime-info" id="datetime-display"></div>
+
+  <div id="resume" class="max-w-3xl mx-auto bg-white bg-opacity-90 backdrop-blur-md p-8 rounded-xl shadow-xl">
     <div class="flex justify-center">
       <div class="profile-pic" id="parallax-pic">
         <img src="https://static.wixstatic.com/media/08adef_375958fd78c74cf39f25a857972112c6~mv2.avif" alt="Profile Picture">
       </div>
     </div>
-    <div class="greeting" id="greeting"></div>
     <header class="mb-8 text-center">
       <h1 class="text-3xl font-bold">Mehnaaz Husain</h1>
       <p class="text-sm text-gray-600 dark:text-gray-400">Illustrator · B.Des, National Institute of Design, AP</p>
-      <p class="mt-2 text-sm">📧 <a href="mailto:mehnaazhusain@gmail.com?subject=Hi Mehnaaz, I've just seen your resume." class="hover:underline">mehnaazhusain@gmail.com</a> · 📞 +91 94611 53073 · 🌐 <a href="http://meforya.com" class="hover:underline">meforya.com</a></p>
+      <p class="mt-2 text-sm">
+        📧 <a href="mailto:mehnaazhusain@gmail.com?subject=Hi Mehnaaz, I've just seen your resume." class="hover:underline">mehnaazhusain@gmail.com</a>
+        · 📞 +91 94611 53073 · 🌐 <a href="http://meforya.com" class="hover:underline">meforya.com</a>
+      </p>
     </header>
 
     <section class="mb-6">
@@ -154,7 +147,6 @@
       <div>
         <h2 class="text-lg font-semibold mb-1">Languages</h2>
         <p>English, Hindi</p>
-
         <h2 class="text-lg font-semibold mt-4 mb-1">Interests</h2>
         <ul class="list-disc list-inside">
           <li>Writing</li>
@@ -168,41 +160,79 @@
   </div>
 
   <script>
-    (function() {
-      const hour = new Date().getHours();
-      let selectedTheme = 'theme-day';
-      let bgImage = 'https://static.wixstatic.com/media/08adef_44ba45c081c040c8a5375473bdce8daa~mv2.png';
+    const themes = {
+      day: 'https://static.wixstatic.com/media/08adef_44ba45c081c040c8a5375473bdce8daa~mv2.png',
+      night: 'https://static.wixstatic.com/media/08adef_b251ae0c6c4c4db09761bd3acb330185~mv2.png'
+    };
+    let currentTheme = 'day';
 
-      if (hour >= 6 && hour < 8) {
-        selectedTheme = 'theme-sunrise';
-        bgImage = 'https://static.wixstatic.com/media/08adef_bc4884a5214949a7a56d36538dbfc3f6~mv2.png';
-      } else if (hour >= 18 && hour < 19.5) {
-        selectedTheme = 'theme-sunset';
-        bgImage = 'https://static.wixstatic.com/media/08adef_57b094a2c28e444a8a90218c20936d5c~mv2.png';
-      } else if (hour >= 19.5 || hour < 6) {
-        selectedTheme = 'theme-night';
-        bgImage = 'https://static.wixstatic.com/media/08adef_b251ae0c6c4c4db09761bd3acb330185~mv2.png';
+    function applyTheme(theme) {
+      document.body.classList.remove('theme-day', 'theme-night');
+      document.body.classList.add(`theme-${theme}`);
+      document.body.style.backgroundImage = `url('${themes[theme]}')`;
+      currentTheme = theme;
+    }
+
+    function toggleTheme() {
+      applyTheme(currentTheme === 'day' ? 'night' : 'day');
+    }
+
+    function downloadPDF() {
+      const element = document.getElementById('resume');
+      html2pdf().from(element).save('Mehnaaz_Husain_Resume.pdf');
+    }
+
+    function updateDatetimeDisplay() {
+      const now = new Date();
+      const day = now.toLocaleDateString('en-US', { weekday: 'long' });
+      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('datetime-display').textContent = `It's ${day}, ${time}`;
+    }
+
+    window.addEventListener('devicemotion', function(event) {
+      if (event.accelerationIncludingGravity.z > 15) {
+        launchConfetti();
       }
+    });
 
-      document.body.classList.add(selectedTheme);
-      document.body.style.backgroundImage = `url('${bgImage}')`;
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
 
-      const greeting = document.getElementById('greeting');
-      const timeGreeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-      const username = navigator.userAgent.includes('Mac') ? 'Mac user' : 'there';
-      greeting.textContent = `${timeGreeting}, ${username}! Thanks for checking out Mehnaaz's resume.`;
+      const confetti = Array.from({ length: 100 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 2,
+        d: Math.random() * 100,
+        color: `hsl(${Math.random() * 360}, 100%, 70%)`
+      }));
 
-      const picElement = document.getElementById('parallax-pic');
-      document.addEventListener('mousemove', (e) => {
-        const { clientX: x, clientY: y } = e;
-        const { innerWidth: w, innerHeight: h } = window;
-        const offsetX = ((x - w / 2) / w) * 20;
-        const offsetY = ((y - h / 2) / h) * 20;
-        if (picElement) {
-          picElement.style.transform = `rotateX(${offsetY}deg) rotateY(${offsetX}deg)`;
-        }
-      });
-    })();
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confetti.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          p.y += Math.cos(p.d) + 1 + p.r / 2;
+          p.x += Math.sin(p.d);
+          if (p.y > canvas.height) {
+            p.y = 0;
+            p.x = Math.random() * canvas.width;
+          }
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    applyTheme('day');
+    updateDatetimeDisplay();
+    setInterval(updateDatetimeDisplay, 60000);
+    lucide.createIcons();
   </script>
 </body>
 </html>
+
