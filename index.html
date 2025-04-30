@@ -15,11 +15,22 @@
       background-repeat: no-repeat;
       font-family: 'Helvetica Neue', sans-serif;
     }
-    .theme-day { color: #1f2937; background-color: #ffffff; }
-    .theme-night { color: #f3f4f6; background-color: #1f2937; }
-    .theme-sunrise { color: #1f2937; background-color: #fffaf0; }
-    .theme-sunset { color: #1f2937; background-color: #fef6e4; }
-
+    .theme-day {
+      color: #1f2937;
+      background-color: #ffffff;
+    }
+    .theme-night {
+      color: #f3f4f6;
+      background-color: #1f2937;
+    }
+    .theme-sunrise {
+      color: #1f2937;
+      background-color: #fffaf0;
+    }
+    .theme-sunset {
+      color: #1f2937;
+      background-color: #fef6e4;
+    }
     .download-icon, .theme-toggle {
       position: fixed;
       top: 1rem;
@@ -43,9 +54,12 @@
     .theme-night .theme-toggle svg {
       stroke: #f3f4f6;
     }
-    .download-icon { left: 1rem; }
-    .theme-toggle { left: 4.5rem; }
-
+    .download-icon {
+      left: 1rem;
+    }
+    .theme-toggle {
+      left: 4.5rem;
+    }
     .datetime-info {
       position: fixed;
       top: 1rem;
@@ -61,28 +75,29 @@
       background: rgba(55, 65, 81, 0.9);
       color: #f3f4f6;
     }
-
-    #resume-wrapper {
-      width: 794px;
-      margin: auto;
-      transform-style: preserve-3d;
-      perspective: 1200px;
-    }
-    #resume-wrapper:hover {
-      will-change: transform;
-    }
     .profile-pic {
       width: 160px;
       aspect-ratio: 1 / 1;
+      perspective: 1000px;
       transition: transform 0.3s ease;
     }
-
-    canvas { display: none; }
-    .theme-night #resume { background-color: #2a2a2a !important; }
-    .theme-night .text-gray-600 { color: #d1d5db !important; }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .theme-night #resume {
+      background-color: #2a2a2a !important;
+    }
+    .theme-night .text-gray-600 {
+      color: #d1d5db !important;
+    }
   </style>
 </head>
 <body class="font-sans p-10">
+  <canvas id="confetti-canvas"></canvas>
   <div class="download-icon" onclick="downloadPDF()">
     <i data-lucide="download"></i>
   </div>
@@ -91,24 +106,21 @@
   </div>
   <div class="datetime-info" id="datetime-display"></div>
 
-  <div id="resume-wrapper">
-    <div id="resume" class="max-w-3xl mx-auto bg-white bg-opacity-90 backdrop-blur-md p-8 rounded-xl shadow-xl">
-      <div class="flex justify-center">
-        <div class="profile-pic">
-          <img src="https://static.wixstatic.com/media/08adef_375958fd78c74cf39f25a857972112c6~mv2.avif" alt="Profile Picture">
-        </div>
+  <div id="resume" class="max-w-3xl mx-auto bg-white bg-opacity-90 backdrop-blur-md p-8 rounded-xl shadow-xl">
+    <div class="flex justify-center">
+      <div class="profile-pic" id="parallax-pic">
+        <img src="https://static.wixstatic.com/media/08adef_375958fd78c74cf39f25a857972112c6~mv2.avif" alt="Profile Picture">
       </div>
-      <header class="mb-8 text-center">
-        <h1 class="text-3xl font-bold">Mehnaaz Husain</h1>
-        <p class="text-sm text-gray-600">Illustrator · B.Des, National Institute of Design, AP</p>
-        <p class="mt-2 text-sm">
-          📧 <a href="mailto:mehnaazhusain@gmail.com?subject=Hi Mehnaaz, I've just seen your resume." class="hover:underline">mehnaazhusain@gmail.com</a>
-          · 📞 +91 94611 53073 · 🌐 <a href="http://meforya.com" class="hover:underline">meforya.com</a>
-        </p>
-      </header>
-      <!-- Resume content inserted below -->
-
-<section class="mb-6">
+    </div>
+    <header class="mb-8 text-center">
+      <h1 class="text-3xl font-bold">Mehnaaz Husain</h1>
+      <p class="text-sm text-gray-600">Illustrator · B.Des, National Institute of Design, AP</p>
+      <p class="mt-2 text-sm">
+        📧 <a href="mailto:mehnaazhusain@gmail.com?subject=Hi Mehnaaz, I've just seen your resume." class="hover:underline">mehnaazhusain@gmail.com</a>
+        · 📞 +91 94611 53073 · 🌐 <a href="http://meforya.com" class="hover:underline">meforya.com</a>
+      </p>
+    </header>
+    <section class="mb-6">
   <h2 class="text-xl font-semibold border-b pb-1 mb-2">About Me</h2>
   <p class="text-sm leading-relaxed">Illustrator with a deep passion for storytelling through animation, comics, and poetry. I explore new activities to gain fresh perspectives and fuel creative inspiration.</p>
 </section>
@@ -168,8 +180,6 @@
     </ul>
   </div>
 </section>
-      <!-- About Me, Education, Experience, Awards, Tools, etc. -->
-    </div>
   </div>
 
   <script>
@@ -204,27 +214,32 @@
     }
 
     function downloadPDF() {
-      const element = document.getElementById('resume-wrapper');
+  const element = document.getElementById('resume');
 
-      const opt = {
-        margin: 0,
-        filename: 'Mehnaaz_Husain_Resume.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          windowWidth: element.scrollWidth
-        },
-        jsPDF: {
-          unit: 'pt',
-          format: 'a4',
-          orientation: 'portrait'
-        },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-      };
+  const opt = {
+    margin: [0, 0],
+    filename: 'Mehnaaz_Husain_Resume.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      allowTaint: false,
+      logging: false,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight,
+    },
+    jsPDF: {
+      unit: 'mm',
+      format: 'a4',
+      orientation: 'portrait'
+    },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  };
 
-      html2pdf().set(opt).from(element).save();
-    }
+  html2pdf().set(opt).from(element).save();
+}
 
     function updateDatetimeDisplay() {
       const now = new Date();
@@ -233,13 +248,44 @@
       document.getElementById('datetime-display').textContent = `It's ${day}, ${time}`;
     }
 
-    // Parallax effect on resume wrapper
-    document.addEventListener('mousemove', (e) => {
-      const wrapper = document.getElementById('resume-wrapper');
-      const x = (e.clientX / window.innerWidth - 0.5) * 10;
-      const y = (e.clientY / window.innerHeight - 0.5) * 10;
-      wrapper.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+    window.addEventListener('devicemotion', function(event) {
+      if (event.accelerationIncludingGravity.z > 15) {
+        launchConfetti();
+      }
     });
+
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const confetti = Array.from({ length: 100 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 2,
+        d: Math.random() * 100,
+        color: `hsl(${Math.random() * 360}, 100%, 70%)`
+      }));
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confetti.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          p.y += Math.cos(p.d) + 1 + p.r / 2;
+          p.x += Math.sin(p.d);
+          if (p.y > canvas.height) {
+            p.y = 0;
+            p.x = Math.random() * canvas.width;
+          }
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
 
     applyTheme(autoDetectTheme());
     updateDatetimeDisplay();
