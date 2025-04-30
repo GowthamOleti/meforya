@@ -5,33 +5,123 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mehnaaz Husain | Resume</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --transition: background 1s ease, color 1s ease, font-family 1s ease;
+    }
+    body {
+      transition: var(--transition);
+    }
+
+    .theme-day {
+      background: #ffffff;
+      color: #1f2937;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    .theme-night {
+      background: #111827;
+      color: #f3f4f6;
+      font-family: 'Courier New', monospace;
+    }
+
+    .theme-sunrise {
+      background: linear-gradient(to bottom right, #ffecd2, #fcb69f);
+      color: #1f2937;
+      font-family: 'Georgia', serif;
+    }
+
+    .theme-sunset {
+      background: linear-gradient(to bottom right, #a18cd1, #fbc2eb);
+      color: #1f2937;
+      font-family: 'Trebuchet MS', sans-serif;
+    }
+
+    a {
+      transition: color 0.3s;
+    }
+
+    .theme-night a {
+      color: #93c5fd;
+    }
+
+    .theme-day a,
+    .theme-sunrise a,
+    .theme-sunset a {
+      color: #2563eb;
+    }
+
+    .theme-night .max-w-3xl {
+      background-color: rgba(31, 41, 55, 0.95);
+      color: #f9fafb;
+    }
+
+    .theme-night .text-sm,
+    .theme-night .text-xl,
+    .theme-night .text-lg,
+    .theme-night p,
+    .theme-night li,
+    .theme-night h1,
+    .theme-night h2 {
+      color: #f9fafb !important;
+    }
+
+    .profile-pic {
+      width: 160px;
+      aspect-ratio: 1 / 1;
+      overflow: visible;
+      margin-bottom: 1.5rem;
+      perspective: 1000px;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .greeting {
+      font-size: 0.875rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      opacity: 0.85;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans p-10">
-  <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-md">
-    <header class="mb-8">
-      <h1 class="text-3xl font-semibold text-gray-800">Mehnaaz Husain</h1>
-      <p class="text-sm text-gray-600">Illustrator · B.Des, National Institute of Design, AP</p>
-      <p class="mt-2 text-sm text-gray-700">📧 mehnaazhusain@gmail.com · 📞 +91 94611 53073 · 🌐 <a href="http://meforya.com" class="text-blue-600 hover:underline">meforya.com</a></p>
+<body class="font-sans p-10">
+  <div class="max-w-3xl mx-auto bg-white bg-opacity-90 backdrop-blur-md p-8 rounded-xl shadow-xl">
+    <div class="flex justify-center">
+      <div class="profile-pic" id="parallax-pic">
+        <img src="https://static.wixstatic.com/media/08adef_375958fd78c74cf39f25a857972112c6~mv2.avif" alt="Profile Picture">
+      </div>
+    </div>
+    <div class="greeting" id="greeting"></div>
+    <header class="mb-8 text-center">
+      <h1 class="text-3xl font-bold">Mehnaaz Husain</h1>
+      <p class="text-sm text-gray-600 dark:text-gray-400">Illustrator · B.Des, National Institute of Design, AP</p>
+      <p class="mt-2 text-sm">📧 <a href="mailto:mehnaazhusain@gmail.com?subject=Hi Mehnaaz, I've just seen your resume." class="hover:underline">mehnaazhusain@gmail.com</a> · 📞 +91 94611 53073 · 🌐 <a href="http://meforya.com" class="hover:underline">meforya.com</a></p>
     </header>
 
     <section class="mb-6">
-      <h2 class="text-xl font-medium text-gray-800 border-b border-gray-200 pb-1 mb-2">About Me</h2>
+      <h2 class="text-xl font-semibold border-b pb-1 mb-2">About Me</h2>
       <p class="text-sm leading-relaxed">Illustrator with a deep passion for storytelling through animation, comics, and poetry. I explore new activities to gain fresh perspectives and fuel creative inspiration.</p>
     </section>
 
     <section class="mb-6">
-      <h2 class="text-xl font-medium text-gray-800 border-b border-gray-200 pb-1 mb-2">Education</h2>
+      <h2 class="text-xl font-semibold border-b pb-1 mb-2">Education</h2>
       <div class="text-sm">
         <p class="font-semibold">Bachelor of Design (B.Des), 2020–2024</p>
-        <p class="text-gray-600 mb-2">National Institute of Design, Andhra Pradesh</p>
-        <p class="font-semibold">Class XII – CBSE, 2020</p>
+        <p class="text-gray-600">National Institute of Design, Andhra Pradesh</p>
+        <p class="mt-2 font-semibold">Class XII – CBSE, 2020</p>
         <p class="text-gray-600">St. Mary’s Convent Sr. Sec. School, Udaipur</p>
       </div>
     </section>
 
     <section class="mb-6">
-      <h2 class="text-xl font-medium text-gray-800 border-b border-gray-200 pb-1 mb-2">Experience</h2>
-      <ul class="text-sm list-disc list-inside space-y-1">
+      <h2 class="text-xl font-semibold border-b pb-1 mb-2">Experience</h2>
+      <ul class="list-disc list-inside text-sm space-y-1">
         <li><strong>Animator Intern</strong>, Plankton Collective – Worked on visual storytelling and character animations.</li>
         <li><strong>Author & Illustrator</strong>, "The Flight" – Self-written and illustrated children’s book.</li>
         <li><strong>Stop Motion Animator</strong>, "Mind Hatch" – Short film exploring abstract animation.</li>
@@ -39,8 +129,8 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="text-xl font-medium text-gray-800 border-b border-gray-200 pb-1 mb-2">Awards & Recognition</h2>
-      <ul class="text-sm list-disc list-inside space-y-1">
+      <h2 class="text-xl font-semibold border-b pb-1 mb-2">Awards & Recognition</h2>
+      <ul class="list-disc list-inside text-sm space-y-1">
         <li>State-Level Essay Winner – United Nations Information Centre</li>
         <li>Panel’s Choice Winner – Dainik Bhaskar Junior Editor II, III</li>
         <li>Winner – 94.3 My FM Rangrezz Painting Competition</li>
@@ -51,7 +141,7 @@
 
     <section class="grid grid-cols-2 gap-4 text-sm">
       <div>
-        <h2 class="text-lg font-medium text-gray-800 mb-1">Tools & Software</h2>
+        <h2 class="text-lg font-semibold mb-1">Tools & Software</h2>
         <ul class="list-disc list-inside">
           <li>Photoshop</li>
           <li>Illustrator</li>
@@ -61,10 +151,10 @@
         </ul>
       </div>
       <div>
-        <h2 class="text-lg font-medium text-gray-800 mb-1">Languages</h2>
+        <h2 class="text-lg font-semibold mb-1">Languages</h2>
         <p>English, Hindi</p>
 
-        <h2 class="text-lg font-medium text-gray-800 mt-4 mb-1">Interests</h2>
+        <h2 class="text-lg font-semibold mt-4 mb-1">Interests</h2>
         <ul class="list-disc list-inside">
           <li>Writing</li>
           <li>Poetry</li>
@@ -75,5 +165,42 @@
       </div>
     </section>
   </div>
+
+  <script>
+    (function() {
+      const hour = new Date().getHours();
+      let selectedTheme = 'theme-day';
+
+      if (hour >= 5 && hour < 8) {
+        selectedTheme = 'theme-sunrise';
+      } else if (hour >= 8 && hour < 18) {
+        selectedTheme = 'theme-day';
+      } else if (hour >= 18 && hour < 20) {
+        selectedTheme = 'theme-sunset';
+      } else {
+        selectedTheme = 'theme-night';
+      }
+
+      document.body.classList.add(selectedTheme);
+
+      // Add personalized greeting based on time
+      const greeting = document.getElementById('greeting');
+      const timeGreeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+      const username = navigator.userAgent.includes('Mac') ? 'Mac user' : 'there';
+      greeting.textContent = `${timeGreeting}, ${username}! Thanks for checking out Mehnaaz's resume.`;
+    })();
+
+    const pic = document.getElementById('parallax-pic');
+    document.addEventListener('mousemove', (e) => {
+      const { clientX: x, clientY: y } = e;
+      const { innerWidth: w, innerHeight: h } = window;
+      const offsetX = ((x - w / 2) / w) * 20;
+      const offsetY = ((y - h / 2) / h) * 20;
+      if (pic) {
+        pic.style.transform = `rotateX(${offsetY}deg) rotateY(${offsetX}deg)`;
+      }
+    });
+  </script>
 </body>
 </html>
+
