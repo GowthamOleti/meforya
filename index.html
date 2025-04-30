@@ -11,28 +11,29 @@
     }
     body {
       transition: var(--transition);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .theme-day {
-      background: #ffffff;
       color: #1f2937;
+      background-color: #ffffff;
       font-family: 'Helvetica Neue', sans-serif;
     }
 
     .theme-night {
-      background: #111827;
       color: #f3f4f6;
+      background-color: #1f2937;
       font-family: 'Courier New', monospace;
     }
 
     .theme-sunrise {
-      background: linear-gradient(to bottom right, #ffecd2, #fcb69f);
       color: #1f2937;
       font-family: 'Georgia', serif;
     }
 
     .theme-sunset {
-      background: linear-gradient(to bottom right, #a18cd1, #fbc2eb);
       color: #1f2937;
       font-family: 'Trebuchet MS', sans-serif;
     }
@@ -170,37 +171,38 @@
     (function() {
       const hour = new Date().getHours();
       let selectedTheme = 'theme-day';
+      let bgImage = 'https://static.wixstatic.com/media/08adef_44ba45c081c040c8a5375473bdce8daa~mv2.png';
 
-      if (hour >= 5 && hour < 8) {
+      if (hour >= 6 && hour < 8) {
         selectedTheme = 'theme-sunrise';
-      } else if (hour >= 8 && hour < 18) {
-        selectedTheme = 'theme-day';
-      } else if (hour >= 18 && hour < 20) {
+        bgImage = 'https://static.wixstatic.com/media/08adef_bc4884a5214949a7a56d36538dbfc3f6~mv2.png';
+      } else if (hour >= 18 && hour < 19.5) {
         selectedTheme = 'theme-sunset';
-      } else {
+        bgImage = 'https://static.wixstatic.com/media/08adef_57b094a2c28e444a8a90218c20936d5c~mv2.png';
+      } else if (hour >= 19.5 || hour < 6) {
         selectedTheme = 'theme-night';
+        bgImage = 'https://static.wixstatic.com/media/08adef_b251ae0c6c4c4db09761bd3acb330185~mv2.png';
       }
 
       document.body.classList.add(selectedTheme);
+      document.body.style.backgroundImage = `url('${bgImage}')`;
 
-      // Add personalized greeting based on time
       const greeting = document.getElementById('greeting');
       const timeGreeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
       const username = navigator.userAgent.includes('Mac') ? 'Mac user' : 'there';
       greeting.textContent = `${timeGreeting}, ${username}! Thanks for checking out Mehnaaz's resume.`;
-    })();
 
-    const pic = document.getElementById('parallax-pic');
-    document.addEventListener('mousemove', (e) => {
-      const { clientX: x, clientY: y } = e;
-      const { innerWidth: w, innerHeight: h } = window;
-      const offsetX = ((x - w / 2) / w) * 20;
-      const offsetY = ((y - h / 2) / h) * 20;
-      if (pic) {
-        pic.style.transform = `rotateX(${offsetY}deg) rotateY(${offsetX}deg)`;
-      }
-    });
+      const picElement = document.getElementById('parallax-pic');
+      document.addEventListener('mousemove', (e) => {
+        const { clientX: x, clientY: y } = e;
+        const { innerWidth: w, innerHeight: h } = window;
+        const offsetX = ((x - w / 2) / w) * 20;
+        const offsetY = ((y - h / 2) / h) * 20;
+        if (picElement) {
+          picElement.style.transform = `rotateX(${offsetY}deg) rotateY(${offsetX}deg)`;
+        }
+      });
+    })();
   </script>
 </body>
 </html>
-
