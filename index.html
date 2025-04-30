@@ -38,6 +38,14 @@
       justify-content: center;
       z-index: 1000;
     }
+    .theme-night .download-icon,
+    .theme-night .theme-toggle {
+      background: #2a2a2a;
+    }
+    .theme-night .download-icon svg,
+    .theme-night .theme-toggle svg {
+      stroke: #f3f4f6;
+    }
     .download-icon {
       left: 1rem;
     }
@@ -55,6 +63,10 @@
       font-weight: 500;
       z-index: 1000;
     }
+    .theme-night .datetime-info {
+      background: rgba(55, 65, 81, 0.9);
+      color: #f3f4f6;
+    }
     .profile-pic {
       width: 160px;
       aspect-ratio: 1 / 1;
@@ -70,6 +82,9 @@
     }
     .theme-night #resume {
       background-color: #2a2a2a !important;
+    }
+    .theme-night .text-gray-600 {
+      color: #d1d5db !important;
     }
   </style>
 </head>
@@ -91,7 +106,7 @@
     </div>
     <header class="mb-8 text-center">
       <h1 class="text-3xl font-bold">Mehnaaz Husain</h1>
-      <p class="text-sm text-gray-600 dark:text-gray-400">Illustrator · B.Des, National Institute of Design, AP</p>
+      <p class="text-sm text-gray-600">Illustrator · B.Des, National Institute of Design, AP</p>
       <p class="mt-2 text-sm">
         📧 <a href="mailto:mehnaazhusain@gmail.com?subject=Hi Mehnaaz, I've just seen your resume." class="hover:underline">mehnaazhusain@gmail.com</a>
         · 📞 +91 94611 53073 · 🌐 <a href="http://meforya.com" class="hover:underline">meforya.com</a>
@@ -171,6 +186,7 @@
       document.body.classList.add(`theme-${theme}`);
       document.body.style.backgroundImage = `url('${themes[theme]}')`;
       currentTheme = theme;
+      lucide.createIcons();
     }
 
     function toggleTheme() {
@@ -235,4 +251,5 @@
   </script>
 </body>
 </html>
+
 
