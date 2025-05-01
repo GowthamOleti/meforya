@@ -194,8 +194,6 @@ function generatePDF() {
   html2pdf().set(opt).from(resume).save().then(() => {
     dp.style.transform = originalSize; // reset DP size
   });
-}
-
   html2pdf().set(opt).from(element).save();
 }
     applyTheme(autoDetectTheme());
