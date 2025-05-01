@@ -170,31 +170,33 @@
 function generatePDF() {
   const resume = document.getElementById("resume");
 
-  // Clone resume for rendering
-  const clonedResume = resume.cloneNode(true);
+  // Ensure images load fully
+  const images = resume.querySelectorAll("img");
+  const imagePromises = Array.from(images).map(img => {
+    if (img.complete) return Promise.resolve();
+    return new Promise(resolve => {
+      img.onload = img.onerror = resolve;
+    });
+  });
 
-  // Hide original resume during PDF render to avoid visual glitches
-  resume.style.display = "none";
-  document.body.appendChild(clonedResume);
+  Promise.all(imagePromises).then(() => {
+    const opt = {
+      margin: 0,
+      filename: "Mehnaaz_Husain_Resume.pdf",
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        logging: true,
+      },
+      jsPDF: {
+        unit: "pt",
+        format: "a4",
+        orientation: "portrait"
+      }
+    };
 
-  const opt = {
-    margin: 0,
-    filename: "Mehnaaz_Husain_Resume.pdf",
-    image: { type: "jpeg", quality: 1 },
-    html2canvas: {
-      scale: 2,
-      useCORS: true
-    },
-    jsPDF: {
-      unit: "pt",
-      format: "a4",
-      orientation: "portrait"
-    }
-  };
-
-  html2pdf().set(opt).from(clonedResume).save().then(() => {
-    clonedResume.remove();
-    resume.style.display = "";
+    html2pdf().set(opt).from(resume).save();
   });
 }
  applyTheme(autoDetectTheme());
