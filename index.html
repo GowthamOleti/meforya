@@ -50,6 +50,21 @@
     }
     .theme-night .text-gray-600 { color: #d1d5db !important; }
     .theme-night #resume { background-color: #2a2a2a !important; }
+    .datetime-info {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.875rem;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      z-index: 1000;
+    }
+    .theme-night .datetime-info {
+      background: rgba(55, 65, 81, 0.9);
+      color: #f3f4f6;
+    }
   </style>
 </head>
 <body class="font-sans p-10">
@@ -59,6 +74,7 @@
   <div class="theme-toggle" onclick="toggleTheme()">
     <i data-lucide="sun-moon"></i>
   </div>
+  <div class="datetime-info" id="datetime-display"></div>
 
   <div id="resume" class="max-w-3xl mx-auto bg-white bg-opacity-90 backdrop-blur-md p-8 rounded-xl shadow-xl">
     <div class="flex justify-center">
