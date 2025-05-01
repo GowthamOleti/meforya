@@ -177,15 +177,11 @@ function generatePDF() {
     image: { type: "jpeg", quality: 1 },
     html2canvas: {
       scale: 2,
-      useCORS: true,
-      scrollX: 0,
-      scrollY: 0,
-      windowWidth: element.offsetWidth,
-      windowHeight: element.offsetHeight
+      useCORS: true
     },
     jsPDF: {
-      unit: "px",
-      format: [element.offsetWidth, element.offsetHeight], // match HTML dimensions
+      unit: "pt",
+      format: "a4",
       orientation: "portrait"
     }
   };
