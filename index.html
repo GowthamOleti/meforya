@@ -168,12 +168,8 @@
       applyTheme(next);
     }
 
-  function generatePDF() {
+function generatePDF() {
   const element = document.getElementById("resume");
-  const profilePic = element.querySelector(".profile-pic");
-
-  // Hide profile picture temporarily
-  profilePic.style.display = "none";
 
   const opt = {
     margin: 0,
@@ -184,19 +180,18 @@
       useCORS: true,
       scrollX: 0,
       scrollY: 0,
-      windowWidth: element.scrollWidth,
-      windowHeight: element.scrollHeight
+      windowWidth: element.offsetWidth,
+      windowHeight: element.offsetHeight
     },
-    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    pagebreak: { mode: ["avoid-all"] }
+    jsPDF: {
+      unit: "px",
+      format: [element.offsetWidth, element.offsetHeight], // match HTML dimensions
+      orientation: "portrait"
+    }
   };
 
-  html2pdf().set(opt).from(element).save().then(() => {
-    // Restore profile picture
-    profilePic.style.display = "block";
-  });
+  html2pdf().set(opt).from(element).save();
 }
-    applyTheme(autoDetectTheme());
   </script>
 </body>
 </html>
