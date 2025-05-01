@@ -168,34 +168,35 @@
       applyTheme(next);
     }
 
-function generatePDF() {
-  const resume = document.getElementById("resume");
-  const dp = resume.querySelector(".profile-pic");
+  function generatePDF() {
+      const resume = document.getElementById("resume");
+      const dp = document.getElementById("dp");
 
-  // Shrink DP for PDF
-  const originalSize = dp.style.transform;
-  dp.style.transform = "scale(0.7)";
+      // Shrink profile image and adjust spacing
+      dp.style.transform = "scale(0.7)";
+      dp.style.marginTop = "-20px";
 
-  const opt = {
-    margin: 0,
-    filename: "Mehnaaz_Husain_Resume.pdf",
-    image: { type: "jpeg", quality: 1 },
-    html2canvas: {
-      scale: 2,
-      useCORS: true
-    },
-    jsPDF: {
-      unit: "pt",
-      format: "a4",
-      orientation: "portrait"
+      const opt = {
+        margin: 0,
+        filename: "Mehnaaz_Husain_Resume.pdf",
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true
+        },
+        jsPDF: {
+          unit: "pt",
+          format: "a4",
+          orientation: "portrait"
+        }
+      };
+
+      html2pdf().set(opt).from(resume).save().then(() => {
+        // Reset profile image size and position
+        dp.style.transform = "";
+        dp.style.marginTop = "";
+      });
     }
-  };
-
-  html2pdf().set(opt).from(resume).save().then(() => {
-    dp.style.transform = originalSize; // reset DP size
-  });
-  html2pdf().set(opt).from(element).save();
-}
     applyTheme(autoDetectTheme());
   </script>
 </body>
