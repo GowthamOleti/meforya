@@ -183,6 +183,13 @@
       const next = currentTheme === 'night' ? 'day' : 'night';
       applyTheme(next);
     }
+     function updateDatetimeDisplay() {
+      const now = new Date();
+      const day = now.toLocaleDateString('en-US', { weekday: 'long' });
+      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('datetime-display').textContent = `It's ${day}, ${time}`;
+    }
+
 function generatePDF() {
   const resume = document.getElementById("resume");
   const dp = document.getElementById("dp");
