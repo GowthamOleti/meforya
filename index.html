@@ -10,28 +10,16 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     body {
-      transition: background 1s ease, color 1s ease;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      transition: background 1s ease, color 1s ease;
       font-family: 'Helvetica Neue', sans-serif;
     }
-    .theme-day {
-      color: #1f2937;
-      background-color: #ffffff;
-    }
-    .theme-night {
-      color: #f3f4f6;
-      background-color: #1f2937;
-    }
-    .theme-sunrise {
-      color: #1f2937;
-      background-color: #fffaf0;
-    }
-    .theme-sunset {
-      color: #1f2937;
-      background-color: #fef6e4;
-    }
+    .theme-day { color: #1f2937; background-color: #ffffff; }
+    .theme-night { color: #f3f4f6; background-color: #1f2937; }
+    .theme-sunrise { color: #1f2937; background-color: #fffaf0; }
+    .theme-sunset { color: #1f2937; background-color: #fef6e4; }
     .download-icon, .theme-toggle {
       position: fixed;
       top: 1rem;
@@ -47,69 +35,34 @@
       justify-content: center;
       z-index: 1000;
     }
-    .theme-night .download-icon,
-    .theme-night .theme-toggle {
+    .theme-night .download-icon, .theme-night .theme-toggle {
       background: #2a2a2a;
     }
-    .theme-night .download-icon svg,
-    .theme-night .theme-toggle svg {
+    .theme-night .download-icon svg, .theme-night .theme-toggle svg {
       stroke: #f3f4f6;
     }
-    .download-icon {
-      left: 1rem;
-    }
-    .theme-toggle {
-      left: 4.5rem;
-    }
-    .datetime-info {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      font-size: 0.875rem;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      font-weight: 500;
-      z-index: 1000;
-    }
-    .theme-night .datetime-info {
-      background: rgba(55, 65, 81, 0.9);
-      color: #f3f4f6;
-    }
+    .download-icon { left: 1rem; }
+    .theme-toggle { left: 4.5rem; }
     .profile-pic {
       width: 160px;
       aspect-ratio: 1 / 1;
-      perspective: 1000px;
       transition: transform 0.3s ease;
     }
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 9999;
-    }
-    .theme-night #resume {
-      background-color: #2a2a2a !important;
-    }
-    .theme-night .text-gray-600 {
-      color: #d1d5db !important;
-    }
+    .theme-night .text-gray-600 { color: #d1d5db !important; }
+    .theme-night #resume { background-color: #2a2a2a !important; }
   </style>
 </head>
 <body class="font-sans p-10">
-  <canvas id="confetti-canvas"></canvas>
-  <div class="download-icon" onclick="downloadPDF()">
+  <div class="download-icon" onclick="generatePDF()">
     <i data-lucide="download"></i>
   </div>
   <div class="theme-toggle" onclick="toggleTheme()">
     <i data-lucide="sun-moon"></i>
   </div>
-  <div class="datetime-info" id="datetime-display"></div>
 
   <div id="resume" class="max-w-3xl mx-auto bg-white bg-opacity-90 backdrop-blur-md p-8 rounded-xl shadow-xl">
     <div class="flex justify-center">
-      <div class="profile-pic" id="parallax-pic">
+      <div class="profile-pic">
         <img src="https://static.wixstatic.com/media/08adef_375958fd78c74cf39f25a857972112c6~mv2.avif" alt="Profile Picture">
       </div>
     </div>
@@ -121,66 +74,67 @@
         · 📞 +91 94611 53073 · 🌐 <a href="http://meforya.com" class="hover:underline">meforya.com</a>
       </p>
     </header>
+
     <section class="mb-6">
-  <h2 class="text-xl font-semibold border-b pb-1 mb-2">About Me</h2>
-  <p class="text-sm leading-relaxed">Illustrator with a deep passion for storytelling through animation, comics, and poetry. I explore new activities to gain fresh perspectives and fuel creative inspiration.</p>
-</section>
+      <h2 class="text-xl font-semibold border-b pb-1 mb-2">About Me</h2>
+      <p class="text-sm leading-relaxed">Illustrator with a deep passion for storytelling through animation, comics, and poetry. I explore new activities to gain fresh perspectives and fuel creative inspiration.</p>
+    </section>
 
-<section class="mb-6">
-  <h2 class="text-xl font-semibold border-b pb-1 mb-2">Education</h2>
-  <div class="text-sm">
-    <p class="font-semibold">Bachelor of Design (B.Des), 2020–2024</p>
-    <p class="text-gray-600">National Institute of Design, Andhra Pradesh</p>
-    <p class="mt-2 font-semibold">Class XII – CBSE, 2020</p>
-    <p class="text-gray-600">St. Mary’s Convent Sr. Sec. School, Udaipur</p>
-  </div>
-</section>
+    <section class="mb-6">
+      <h2 class="text-xl font-semibold border-b pb-1 mb-2">Education</h2>
+      <div class="text-sm">
+        <p class="font-semibold">Bachelor of Design (B.Des), 2020–2024</p>
+        <p class="text-gray-600">National Institute of Design, Andhra Pradesh</p>
+        <p class="mt-2 font-semibold">Class XII – CBSE, 2020</p>
+        <p class="text-gray-600">St. Mary’s Convent Sr. Sec. School, Udaipur</p>
+      </div>
+    </section>
 
-<section class="mb-6">
-  <h2 class="text-xl font-semibold border-b pb-1 mb-2">Experience</h2>
-  <ul class="list-disc list-inside text-sm space-y-1">
-    <li><strong>Product Illustrator</strong>, Zomato – Designing illustration assets for the product experience (Sep 2024 – Present).</li>
-    <li><strong>Animator Intern</strong>, Plankton Collective – Worked on visual storytelling and character animations.</li>
-    <li><strong>Author & Illustrator</strong>, "The Flight" – Self-written and illustrated children’s book.</li>
-    <li><strong>Stop Motion Animator</strong>, "Mind Hatch" – Short film exploring abstract animation.</li>
-  </ul>
-</section>
+    <section class="mb-6">
+      <h2 class="text-xl font-semibold border-b pb-1 mb-2">Experience</h2>
+      <ul class="list-disc list-inside text-sm space-y-1">
+        <li><strong>Product Illustrator</strong>, Zomato – Designing illustration assets for the product experience (Sep 2024 – Present).</li>
+        <li><strong>Animator Intern</strong>, Plankton Collective – Worked on visual storytelling and character animations.</li>
+        <li><strong>Author & Illustrator</strong>, "The Flight" – Self-written and illustrated children’s book.</li>
+        <li><strong>Stop Motion Animator</strong>, "Mind Hatch" – Short film exploring abstract animation.</li>
+      </ul>
+    </section>
 
-<section class="mb-6">
-  <h2 class="text-xl font-semibold border-b pb-1 mb-2">Awards & Recognition</h2>
-  <ul class="list-disc list-inside text-sm space-y-1">
-    <li>State-Level Essay Winner – United Nations Information Centre</li>
-    <li>Panel’s Choice Winner – Dainik Bhaskar Junior Editor II, III</li>
-    <li>Winner – 94.3 My FM Rangrezz Painting Competition</li>
-    <li>First Runner-up – Max Life & Axis Bank Drawing Competition</li>
-    <li>Artist of the Year – Jamna Devi Chugh Memorial Award</li>
-  </ul>
-</section>
+    <section class="mb-6">
+      <h2 class="text-xl font-semibold border-b pb-1 mb-2">Awards & Recognition</h2>
+      <ul class="list-disc list-inside text-sm space-y-1">
+        <li>State-Level Essay Winner – United Nations Information Centre</li>
+        <li>Panel’s Choice Winner – Dainik Bhaskar Junior Editor II, III</li>
+        <li>Winner – 94.3 My FM Rangrezz Painting Competition</li>
+        <li>First Runner-up – Max Life & Axis Bank Drawing Competition</li>
+        <li>Artist of the Year – Jamna Devi Chugh Memorial Award</li>
+      </ul>
+    </section>
 
-<section class="grid grid-cols-2 gap-4 text-sm">
-  <div>
-    <h2 class="text-lg font-semibold mb-1">Tools & Software</h2>
-    <ul class="list-disc list-inside">
-      <li>Photoshop</li>
-      <li>Illustrator</li>
-      <li>ToonBoom</li>
-      <li>After Effects</li>
-      <li>MS Office</li>
-    </ul>
-  </div>
-  <div>
-    <h2 class="text-lg font-semibold mb-1">Languages</h2>
-    <p>English, Hindi</p>
-    <h2 class="text-lg font-semibold mt-4 mb-1">Interests</h2>
-    <ul class="list-disc list-inside">
-      <li>Writing</li>
-      <li>Poetry</li>
-      <li>Swimming</li>
-      <li>Skating</li>
-      <li>Badminton</li>
-    </ul>
-  </div>
-</section>
+    <section class="grid grid-cols-2 gap-4 text-sm">
+      <div>
+        <h2 class="text-lg font-semibold mb-1">Tools & Software</h2>
+        <ul class="list-disc list-inside">
+          <li>Photoshop</li>
+          <li>Illustrator</li>
+          <li>ToonBoom</li>
+          <li>After Effects</li>
+          <li>MS Office</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-lg font-semibold mb-1">Languages</h2>
+        <p>English, Hindi</p>
+        <h2 class="text-lg font-semibold mt-4 mb-1">Interests</h2>
+        <ul class="list-disc list-inside">
+          <li>Writing</li>
+          <li>Poetry</li>
+          <li>Swimming</li>
+          <li>Skating</li>
+          <li>Badminton</li>
+        </ul>
+      </div>
+    </section>
   </div>
 
   <script>
@@ -214,83 +168,27 @@
       applyTheme(next);
     }
 
-    function downloadPDF() {
-  const element = document.getElementById('resume');
-
-  const opt = {
-    margin: [0, 0],
-    filename: 'Mehnaaz_Husain_Resume.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: {
-      scale: 2,
-      useCORS: true,
-      allowTaint: false,
-      logging: false,
-      scrollX: 0,
-      scrollY: 0,
-      windowWidth: element.scrollWidth,
-      windowHeight: element.scrollHeight,
-    },
-    jsPDF: {
-      unit: 'mm',
-      format: 'a4',
-      orientation: 'portrait'
-    },
-    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-  };
-
-  html2pdf().set(opt).from(element).save();
-}
-
-    function updateDatetimeDisplay() {
-      const now = new Date();
-      const day = now.toLocaleDateString('en-US', { weekday: 'long' });
-      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      document.getElementById('datetime-display').textContent = `It's ${day}, ${time}`;
-    }
-
-    window.addEventListener('devicemotion', function(event) {
-      if (event.accelerationIncludingGravity.z > 15) {
-        launchConfetti();
-      }
-    });
-
-    function launchConfetti() {
-      const canvas = document.getElementById('confetti-canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const confetti = Array.from({ length: 100 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 6 + 2,
-        d: Math.random() * 100,
-        color: `hsl(${Math.random() * 360}, 100%, 70%)`
-      }));
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        confetti.forEach(p => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.fill();
-          p.y += Math.cos(p.d) + 1 + p.r / 2;
-          p.x += Math.sin(p.d);
-          if (p.y > canvas.height) {
-            p.y = 0;
-            p.x = Math.random() * canvas.width;
-          }
-        });
-        requestAnimationFrame(draw);
-      }
-      draw();
+    function generatePDF() {
+      const element = document.getElementById("resume");
+      const opt = {
+        margin: 0,
+        filename: "Mehnaaz_Husain_Resume.pdf",
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: element.scrollWidth,
+          windowHeight: element.scrollHeight
+        },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        pagebreak: { mode: ["avoid-all"] }
+      };
+      html2pdf().set(opt).from(element).save();
     }
 
     applyTheme(autoDetectTheme());
-    updateDatetimeDisplay();
-    setInterval(updateDatetimeDisplay, 60000);
   </script>
 </body>
 </html>
