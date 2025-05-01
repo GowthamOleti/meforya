@@ -169,20 +169,7 @@
     }
 
 function generatePDF() {
-  const resume = document.getElementById("resume");
-  const dp = document.getElementById("dp");
-
-  // Create a clone of the resume for rendering
-  const clonedResume = resume.cloneNode(true);
-  const clonedDp = clonedResume.querySelector("#dp");
-
-  // Apply scale and margin adjustments to cloned profile image
-  clonedDp.style.transform = "scale(0.7)";
-  clonedDp.style.marginTop = "-20px";
-
-  // Hide original resume during PDF render to avoid visual glitches
-  resume.style.display = "none";
-  document.body.appendChild(clonedResume);
+  const element = document.getElementById("resume");
 
   const opt = {
     margin: 0,
@@ -199,13 +186,8 @@ function generatePDF() {
     }
   };
 
-  html2pdf().set(opt).from(clonedResume).save().then(() => {
-    // Cleanup: remove clone and restore original
-    clonedResume.remove();
-    resume.style.display = "";
-  });
-}
-    applyTheme(autoDetectTheme());
+  html2pdf().set(opt).from(element).save();
+} applyTheme(autoDetectTheme());
   </script>
 </body>
 </html>
