@@ -20,7 +20,7 @@
     .theme-night { color: #f3f4f6; background-color: #1f2937; }
     .theme-sunrise { color: #1f2937; background-color: #fffaf0; }
     .theme-sunset { color: #1f2937; background-color: #fef6e4; }
-    .download-icon, .theme-toggle, .dyslexia-toggle {
+    .download-icon, .theme-toggle {
       position: fixed;
       top: 1rem;
       width: 36px;
@@ -35,15 +35,14 @@
       justify-content: center;
       z-index: 1000;
     }
-    .theme-night .download-icon, .theme-night .theme-toggle, .theme-night .dyslexia-toggle {
+    .theme-night .download-icon, .theme-night .theme-toggle {
       background: #2a2a2a;
     }
-    .theme-night .download-icon svg, .theme-night .theme-toggle svg, .theme-night .dyslexia-toggle svg {
+    .theme-night .download-icon svg, .theme-night .theme-toggle svg {
       stroke: #f3f4f6;
     }
     .download-icon { left: 1rem; }
     .theme-toggle { left: 4.5rem; }
-    .dyslexia-toggle { left: 8rem; }
     .profile-pic {
       width: 160px;
       aspect-ratio: 1 / 1;
@@ -51,32 +50,16 @@
     }
     .theme-night .text-gray-600 { color: #d1d5db !important; }
     .theme-night #resume { background-color: #2a2a2a !important; }
-    #resume {
-      animation: fadeIn 0.8s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .dyslexia-mode {
-      font-family: 'OpenDyslexic', Arial, sans-serif !important;
-      letter-spacing: 0.03em;
-    }
   </style>
-  <link href="https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic/web/OpenDyslexic-Regular.css" rel="stylesheet" />
 </head>
 <body class="font-sans p-10">
   <div class="download-icon" onclick="generatePDF()">
     <i data-lucide="download"></i>
   </div>
   <div class="theme-toggle" onclick="toggleTheme()">
-    <i id="theme-icon" data-lucide="sun"></i>
-  </div>
-  <div class="dyslexia-toggle" onclick="toggleDyslexiaMode()">
-    <i data-lucide="accessibility"></i>
+    <i data-lucide="sun-moon"></i>
   </div>
 
-  <div id="resume" class="max-w-3xl mx-auto bg-white bg-opacity-90 backdrop-blur-md p-8 rounded-xl shadow-xl">
   <div id="resume" class="max-w-3xl mx-auto bg-white bg-opacity-90 backdrop-blur-md p-8 rounded-xl shadow-xl">
     <div class="flex justify-center">
       <div class="profile-pic">
@@ -154,7 +137,7 @@
     </section>
   </div>
 
-<script>
+  <script>
     const themes = {
       day: 'https://static.wixstatic.com/media/08adef_44ba45c081c040c8a5375473bdce8daa~mv2.png',
       night: 'https://static.wixstatic.com/media/08adef_b251ae0c6c4c4db09761bd3acb330185~mv2.png',
@@ -163,15 +146,13 @@
     };
 
     let currentTheme = null;
-    let dyslexiaMode = false;
 
     function applyTheme(theme) {
       document.body.classList.remove('theme-day', 'theme-night', 'theme-sunrise', 'theme-sunset');
       document.body.classList.add(`theme-${theme}`);
       document.body.style.backgroundImage = `url('${themes[theme]}')`;
-      document.getElementById('theme-icon').setAttribute('data-lucide', theme === 'night' ? 'moon' : 'sun');
-      lucide.createIcons();
       currentTheme = theme;
+      lucide.createIcons();
     }
 
     function autoDetectTheme() {
@@ -187,36 +168,32 @@
       applyTheme(next);
     }
 
-    function toggleDyslexiaMode() {
-      document.body.classList.toggle('dyslexia-mode');
-      dyslexiaMode = !dyslexiaMode;
+function generatePDF() {
+  const element = document.getElementById("resume");
+
+  const opt = {
+    margin: 0,
+    filename: "Mehnaaz_Husain_Resume.pdf",
+    image: { type: "jpeg", quality: 1 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true
+    },
+    jsPDF: {
+      unit: "pt",
+      format: "a4",
+      orientation: "portrait"
     }
+  };
 
-    function generatePDF() {
-      const element = document.getElementById("resume");
-      if (navigator.vibrate) navigator.vibrate(100);
-
-      const opt = {
-        margin: 0,
-        filename: "Mehnaaz_Husain_Resume.pdf",
-        image: { type: "jpeg", quality: 1 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true
-        },
-        jsPDF: {
-          unit: "pt",
-          format: "a4",
-          orientation: "portrait"
-        }
-      };
-
-      html2pdf().set(opt).from(element).save();
-    }
-
-    applyTheme(autoDetectTheme());
+  html2pdf().set(opt).from(element).save();
+} applyTheme(autoDetectTheme());
   </script>
 </body>
+</html>
+
+
+
 </html>
 
 
