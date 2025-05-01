@@ -168,33 +168,40 @@
       applyTheme(next);
     }
 
-function generatePDF() {
-  const element = document.getElementById("resume");
+ function generatePDF() {
+  const resume = document.getElementById("resume");
+  const dp = document.getElementById("dp");
 
-  const opt = {
-    margin: 0,
-    filename: "Mehnaaz_Husain_Resume.pdf",
-    image: { type: "jpeg", quality: 1 },
-    html2canvas: {
-      scale: 2,
-      useCORS: true
-    },
-    jsPDF: {
-      unit: "pt",
-      format: "a4",
-      orientation: "portrait"
-    }
-  };
+  // Shrink profile image and adjust spacing
+  dp.style.transform = "scale(0.7)";
+  dp.style.marginTop = "-20px";
 
-  html2pdf().set(opt).from(element).save();
-} applyTheme(autoDetectTheme());
+  // Force reflow and delay slightly before rendering
+  setTimeout(() => {
+    const opt = {
+      margin: 0,
+      filename: "Mehnaaz_Husain_Resume.pdf",
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true
+      },
+      jsPDF: {
+        unit: "pt",
+        format: "a4",
+        orientation: "portrait"
+      }
+    };
+
+    html2pdf().set(opt).from(resume).save().then(() => {
+      dp.style.transform = "";
+      dp.style.marginTop = "";
+    });
+  }, 300); // wait 300ms to apply style changes
+}
+    applyTheme(autoDetectTheme());
   </script>
 </body>
 </html>
-
-
-
-</html>
-
 
 
